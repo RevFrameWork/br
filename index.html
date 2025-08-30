@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>IMG</title>
+  <style>
+    body {
+      background:#0f172a;
+      color:#e6eef8;
+      font-family:system-ui, sans-serif;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      margin:0;
+    }
+    img {
+      max-width:60%;
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,.7);
+      margin-top:1rem;
+    }
+    .info{
+      margin-top:.5rem;
+      font-size:.9rem;
+      opacity:.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Image Loaded</h1>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const val = params.get("br");
+
+    function show(msg) {
+      document.getElementById("output").innerHTML = msg;
+    }
+
+    if(val){
+      // decodificamos el valor por si viene %7c
+      const decoded = decodeURIComponent(val);
+      // buscamos el último número después de |
+      const match = decoded.match(/\|(\d+)$/);
+      if(match){
+        const num = match[1];
+        const img = document.createElement("img");
+        img.src = num + ".png";  // <- aquí arma el nombre de la imagen
+        document.body.appendChild(img);
+      } else {
+        show("Err: invalid url" + decoded);
+      }
+    } else {
+      show("Err: invalid url");
+    }
+  </script>
+</body>
+</html>
